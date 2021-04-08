@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="exchange_match_engine.AccountSymbolMapper">
+    <select id="selectAccntSym" resultType="hashmap">
+        select * from account_symbol where account_num=#{accountID} and symbol=#{symbol}
+    </select>
+    <select id="selectAccountBySymbol" resultType="hashmap">
+        select * from account_symbol where symbol=#{symbol}
+    </select>
+    <insert id="insertNewAccountSymMapping">
+        insert into account_symbol (account_num,symbol,amount) values (#{accountID},#{symbol},#{amount})
+    </insert>
+    <update id="updateAccountSymMapping">
+        update account_symbol set amount = #{amount} where account_num=#{accountID} and symbol=#{symbol}
+    </update>
+</mapper>

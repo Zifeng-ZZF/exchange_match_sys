@@ -1,0 +1,142 @@
+#for create
+<?xml version="1.0" encoding="UTF-8"?>
+<create>
+<account id="123456" balance="100000"/>
+<symbol sym="SPY">
+<account id="123456">1000</account>
+</symbol>
+<account id="123456" balance="1000"/> #check error for creating an existing account
+<symbol sym="SPY">
+<account id="12345">1000</account> #check error for creating symbol for a nonexist account
+</symbol>
+<account id="1234567" balance="100000"/>
+</create>
+
+----result
+<results>
+<created id="123456"/> #create account successfully
+<created sym="SPY" id="123456"/> #create symbol successfully
+<error id="123456">Account already exists</error> #For account create error
+<error sym="SPY" id="12345">Account doest exist</error> #For symbol create error
+<created id="1234567"/>
+</results>
+
+#transaction-----with error
+<transactions id="12345"> #when account id doesn't exist
+<order sym="SPY" amount="1000" limit="123"/>
+<cancel id="1">
+</transactions>
+
+----result
+<results>
+<error sym="SPY" id="12345">Account doest exist</error> #For symbol create error
+<error sym="SPY" id="12345">Account doest exist</error> #For symbol create error
+</results>
+
+#transaction
+<transactions id="1234567"> 
+<order sym="SPY" amount="300" limit="125"/> #1 buy
+<order sym="SPY" amount="-100" limit="130"/> #2
+<order sym="SPY" amount="200" limit="127"/> #3
+<order sym="SPY" amount="-500" limit="128"/> #4
+<order sym="SPY" amount="-200" limit="140"/> #5
+<order sym="SPY" amount="400" limit="125"/> #6
+<order sym="SPY" amount="100000" limit="140"/> #
+<query id="5">
+</transactions>
+
+----result
+<results>
+<opened sym="SPY" amount="300" limit="125" id="1"/>
+<opened sym="SPY" amount="-100" limit="130" id="2"/>
+<opened sym="SPY" amount="200" limit="127" id="3"/>
+<opened sym="SPY" amount="-500" limit="128" id="4"/>
+<opened sym="SPY" amount="-200" limit="140" id="5"/>
+<opened sym="SPY" amount="400" limit="125" id="6"/>
+<error sym="SPY" amount="100000" limit="140">Account does not have sufficient funds.</error>????????卖的不够
+<status id="5">
+<open shares=-200/>
+</status>
+</results>
+
+#transaction
+<transactions id="1234567"> #when account id doesn't exist
+<order sym="SPY" amount="300" limit="125"/> #1 buy
+<order sym="SPY" amount="-100" limit="130"/> #2
+<order sym="SPY" amount="200" limit="127"/> #3
+<order sym="SPY" amount="-500" limit="128"/> #4
+<order sym="SPY" amount="-200" limit="140"/> #5
+<order sym="SPY" amount="400" limit="125"/> #6
+<order sym="SPY" amount="100000" limit="140"/> #
+<query id="5">
+</transactions>
+
+----result
+<results>
+<opened sym="SPY" amount="300" limit="125" id="1"/>
+<opened sym="SPY" amount="-100" limit="130" id="2"/>
+<opened sym="SPY" amount="200" limit="127" id="3"/>
+<opened sym="SPY" amount="-500" limit="128" id="4"/>
+<opened sym="SPY" amount="-200" limit="140" id="5"/>
+<opened sym="SPY" amount="400" limit="125" id="6"/>
+<error sym="SPY" amount="100000" limit="140">Account does not have sufficient funds.</error>????????卖的不够
+<status id="5">
+<open shares=-200/>
+</status>
+</results>
+
+
+
+
+
+#match
+<transactions id="123456"> #when account id doesn't exist
+<order sym="SPY" amount="-400" limit="124"/> #7 buy
+<query id="7">
+</transactions>
+
+----result
+<results>
+<opened sym="SPY" amount="-400" limit="124" id="7"/>
+<status id="8">
+<executed shares="200" price="127" time="1519348325"/>#time?????
+<executed shares="200" price="125" time="1519348326"/>#time?????
+</status>
+</results>
+
+<transactions id="1234567"> #when account id doesn't exist
+<query id="1">
+<query id="3">
+</transactions>
+
+<results>
+<status id="1">
+<open shares="100"/>
+<executed shares="200" price="125" time="1519348326"/>#time????
+</status>
+<status id="3">
+<executed shares="200" price="127" time="1519348326"/>#time????
+</status>
+</results>
+
+<transactions id="123456"> #when account id doesn't exist
+<order sym="SPY" amount="300" limit="129"/> #8 buy
+<cancel id="4">
+<query id="4">
+<query id="8">
+</transactions>
+
+<results>
+<opened sym="SPY" amount="300" limit="129" id="8"/>
+<canceled id="4">
+<canceled shares=200 time=.../>#time????
+<executed shares=300 price=129 time=.../>#time????
+</canceled>
+<status id="4">
+<canceled shares=200 time=.../>#time????
+<executed shares=300 price=129 time=.../>#time????
+</status>
+<status id="8">
+<executed shares=300 price=129 time=.../>#time????
+</status>
+</results>

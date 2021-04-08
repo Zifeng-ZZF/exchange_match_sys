@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="exchange_match_engine.OrderMapper">
+
+
+    <!--    SQL For open_orders table   -->
+    <select id="selectOrderById" resultType="exchange_match_engine.Order">
+        select * from open_orders where id = #{id}
+    </select>
+    <select id="selectOpenOrder" resultType="hashmap">
+        select * from open_orders
+    </select>
+    <select id="selectOrderByAccountAndSymbol" resultType="hashmap">
+        select * from open_orders where account_num = #{id} and symbol = #{sym}
+    </select>
+    <insert id="insertAnOrder" parameterType="exchange_match_engine.Order" useGeneratedKeys="true" keyProperty="order.id" keyColumn="id">
+        insert into open_orders (account_num, symbol, amount, limit_price, create_date)
+        values (#{accountNum}, #{symbol}, #{amount}, #{limit}, #{time})
+    </insert>
+    <delete id="deleteAnOpenOrder">
+        delete from open_orders where id=#{id}
+    </delete>
+    <select id="selectOpenSellSortedPriceAndTime" resultType="hashmap">
+        select * from open_orders
+        where
+              symbol = #{symbol} and
+              amount <![CDATA[<]]> 0 and
+              limit_price <![CDATA[<=]]> #{limit} and
+              account_num != #{account}
+        order by limit_price asc, create_date asc
+    </select>
+    <select id="selectOpenBuySortedPriceAndTime" resultType="hashmap">
+        select * from open_orders
+        where
+              symbol = #{symbol} and
+              amount <![CDATA[>=]]> 0 and
+              limit_price <![CDATA[>=]]> #{limit} and
+              account_num != #{account}
+        order by limit_price desc, create_date asc
+    </select>
+    <update id="updateOpenOrderAmount">
+        update open_orders set amount=#{amount} where id=#{id}
+    </update>
+
+
+    <!--    SQL For cancel_orders table   -->
+    <select id="selectCancelByID" resultType="hashmap">
+        select * from cancel_orders where id = #{id}
+    </select>
+    <insert id="insertACancelOrder">
+        insert into cancel_orders (id, account_num, symbol, amount, limit_price, create_date, canceled_date)
+        values (#{transactionID}, #{accountNum}, #{symbol}, #{amount}, #{limit}, #{create_time},#{time})
+    </insert>
+
+
+    <!--    SQL For executed_orders table   -->
+    <select id="selectExecutedByID" resultType="hashmap">
+        select * from executed_orders where id = #{id}
+    </select>
+    <insert id="insertAnExecutedOrder">
+        insert into executed_orders (id, account_num, symbol, amount, final_price, create_date, executed_date)
+        values (#{transactionID}, #{accountNum}, #{symbol}, #{amount}, #{final_price}, #{create_time}, #{time})
+    </insert>
+
+
+</mapper>

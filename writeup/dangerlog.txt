@@ -1,0 +1,10 @@
+3.15 We start to wirte parse request and try to learn how to use packet in Java to implement.
+3.16 Write test for parser and start to think about server logic.
+3.20 We finish the create part of server. We test it and find there are several corner that we didn't think of before.
+We add more error checker and modify our code.
+3.25 We finish the implement of transaction part.
+3.27 We test our transaction part and find we can't match correctly. When there are orders that can match, the server did 
+nothing. We review our code and find there are some logistic error. We fix this part of problem.
+3.29 We test more cases and find there are some request error that aren't handled. We add more error checking.
+3.30 We begin to design scalability test and implement it. We test two cases. One is add more cores, the other is 
+increase the number of requests. We test a bunch of grout data and draw a diagram to show it directly. And then finish our report.

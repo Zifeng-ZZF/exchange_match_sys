@@ -1,0 +1,34 @@
+<create><account balance="1000000" id="123456"/><symbol sym="SPY"><account id="123456">10000</account></symbol><symbol sym="SPY"><account id="123456">1000</account></symbol><account balance="1000000" id="123456"/><symbol sym="SPY"><account id="12345">1000</account></symbol><account balance="1000000" id="1234567"/></create>
+<create><account balance="10000" id="1"/><symbol sym="SPY"><account id="1">-1000</account></symbol></create>
+<transactions id="1234567"><order amount="300" limit="125" sym="SPY"/></transactions>
+<transactions id="123456"><order amount="-100" limit="130" sym="SPY"/></transactions>
+<transactions id="1234567"><order amount="200" limit="127" sym="SPY"/></transactions>
+<transactions id="123456"><order amount="-500" limit="128" sym="SPY"/></transactions>
+<transactions id="123456"><order amount="-200" limit="140" sym="SPY"/></transactions>
+<transactions id="1234567"><order amount="400" limit="125" sym="SPY"/></transactions>
+<transactions id="1234567"><order amount="100000" limit="125" sym="SPY"/></transactions>
+<transactions id="123456"><order amount="-100000" limit="125" sym="SPY"/></transactions>
+<transactions id="123456"><query id="5"/></transactions>
+<transactions id="123456"><order amount="-400" limit="124" 
+
+
+
+<results><created id="123456"/><created sym="SPY" id="123456"/><created sym="SPY" id="123456"/><error id="123456">Account already exist.</error><error sym="SPY" id="12345">Account does not exist.</error><created id="1234567"/></results>
+<results><created id="1"/><error sym="SPY" id="1">Negative amount</error></results>
+<results><opened sym="SPY" amount="300.0" limit="125.0" id="1" /></results>
+<results><opened sym="SPY" amount="-100.0" limit="130.0" id="2" /></results>
+<results><opened sym="SPY" amount="200.0" limit="127.0" id="3" /></results>
+<results><opened sym="SPY" amount="-500.0" limit="128.0" id="4" /></results>
+<results><opened sym="SPY" amount="-200.0" limit="140.0" id="5" /></results>
+<results><opened sym="SPY" amount="400.0" limit="125.0" id="6" /></results>
+<results><error sym="SPY" amount="100000.0" limit="125.0">Account does not have sufficient funds.</error></results>
+<results><error sym="SPY" amount="-100000.0" limit="125.0">Account does not have sufficient shares of the Symbol.</error></results>
+<results><status id="5"><open shares="-200.0"/></status></results>
+<results><opened sym="SPY" amount="-400.0" limit="124.0" id="7" /></results>
+<results><status id="7"><executed shares="-200.0" price="127.0" time="0"/><executed shares="-200.0" price="125.0" time="0"/></status></results>
+<results><status id="1"><open shares="100.0"/><executed shares="200.0" price="125.0" time="5"/></status></results>
+<results><status id="3"><executed shares="200.0" price="127.0" time="4"/></status></results>
+<results><opened sym="SPY" amount="300.0" limit="129.0" id="8" /></results>
+<results><canceled id="4"><canceled shares="-200.0" time="6"/><executed shares="-300.0" price="128.0" time="5"/></canceled></results>
+<results><status id="4"><canceled shares="-200.0" time="6"/><executed shares="-300.0" price="128.0" time="5"/></status></results>
+<results><status id="8"><executed shares="300.0" price="128.0" time="0"/></status></results>

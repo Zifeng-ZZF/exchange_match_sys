@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="exchange_match_engine.AccountMapper">
+    <select id="selectAccountById" resultType="exchange_match_engine.Account">
+        select * from accounts where account_num = #{id}
+    </select>
+    <insert id="insertNewAccount">
+        insert into accounts (account_num,balance) values (#{id},#{balance})
+    </insert>
+    <update id="updateBalance">
+        update accounts set balance=#{newBalance} where account_num=#{id}
+    </update>
+</mapper>
